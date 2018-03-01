@@ -22,6 +22,18 @@ var io = socketIO(server);
 io.on('connection', (socket) =>{
     console.log('New user connected');
 
+
+    //-- emiting an newEmail event to client
+    socket.emit('newMessage',{
+        from: 'Sanjeeev_sinha@hotmail.com',
+        text: 'Testing new email',
+        createdAt: 122
+    });
+
+    socket.on('createMessage', (message) =>{
+        console.log('created email event', message);
+    });
+
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
