@@ -24,14 +24,22 @@ io.on('connection', (socket) =>{
 
 
     //-- emiting an newEmail event to client
-    socket.emit('newMessage',{
-        from: 'Sanjeeev_sinha@hotmail.com',
-        text: 'Testing new email',
-        createdAt: 122
-    });
+    //-- socket emits on single connection 
+    // socket.emit('newMessage',{
+    //     from: 'Sanjeeev_sinha@hotmail.com',
+    //     text: 'Testing new email',
+    //     createdAt: 122
+    // });
 
     socket.on('createMessage', (message) =>{
         console.log('created email event', message);
+
+        //-- io emits message to every connection
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        })
     });
 
     socket.on('disconnect', () => {
